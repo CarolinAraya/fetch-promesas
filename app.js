@@ -1,6 +1,6 @@
 window.onload = () => {
 
-  
+  const loading = document.getElementById("loading");
 
   //BOTON PERROS
   const btnDoges = document.getElementById("dogeReceptorBtn").addEventListener("click", () => {
@@ -32,7 +32,7 @@ window.onload = () => {
 
   //BOTON GATOS
   const btnCates = document.getElementById("cateReceptorBtn").addEventListener("click", () => {
-        
+    loading.style.display = "block";
     // Fetch retorna una promesa
     fetch(`https://cors-anywhere.herokuapp.com/http://shibe.online/api/cats?count=10&urls=true&httpsUrls=true`) //Recibe la URL donde se va a hacer la consulta
       .then((response) => { //Este then es de la promesa del fetch
@@ -43,6 +43,7 @@ window.onload = () => {
         }
       }).then((catesJson) => { //recibimos el JSON en este punto
         //Este then es de la promesa de response.json()
+        loading.style.display = "none";
         const cateReceptorDiv = document.getElementById("cateReceptor");
         for (let cateIndex = 0; cateIndex < catesJson.length; cateIndex++) {
           const cateImg = document.createElement('img'); //Aquí "almaceno" las imágenes
@@ -53,13 +54,13 @@ window.onload = () => {
       .catch((error) => {
         console.error("Holi soy un error " + error);
       });
-       
+
   });
   // Acá vamos a poner la función para obtener info de gatos
 
 
 
- //
+  //
   const btnAnimal = document.getElementById("cateReceptorBtn").addEventListener("click", () => {
 
     Promise.all([
