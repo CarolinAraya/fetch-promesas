@@ -70,16 +70,15 @@ window.onload = () => {
 
 
   //
-  const btnAnimal = document.getElementById("cateReceptorBtn").addEventListener("click", () => {
+  const btnAnimal = document.getElementById("animalReceptorBtn").addEventListener("click", () => {
 
     loading.style.display = "block";//IMG LOADING
 
     Promise.all([
       fetch(`https://cors-anywhere.herokuapp.com/http://shibe.online/api/cats?count=10&urls=true&httpsUrls=true`),
-      fetch(`https://cors-anywhere.herokuapp.com/http://shibe.online/api/shibes?count=10&urls=true&httpsUrls=true`)
-
+      fetch(`https://cors-anywhere.herokuapp.com/http://shibe.online/api/shibes?count=10&urls=true&httpsUrls=true`),
+      fetch(`https://cors-anywhere.herokuapp.com/http://shibe.online/api/birds?count=10&urls=true&httpsUrls=true`)
     ]).then((responses) => {
-      loading.style.display = "none";// END IMG LOADING
       return Promise.all(
         responses.map(
           (response) => {
@@ -87,9 +86,20 @@ window.onload = () => {
           }
         )
       );
+      loading.style.display = "none";// END IMG LOADING
     }).then((catesDogesJson) => {
       console.log("Respuesta en paralelo > " + JSON.stringify(catesDogesJson));
-    }).catch((error) => {
+      const animalReceptorDiv = document.getElementById("animalReceptor");
+      catesDogesJson.forEach((jsonElement) => {
+        jsonElement.forEach((animal) => {
+          const animalImg = document.createElement("img");
+          animalImg.src = animal;
+          animalReceptorDiv.appendChild(animalImg);
+          loading.style.display = "none";
+        });
+      }).catch((error) => {
+
+      });
     });
   });
 };
